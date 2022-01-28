@@ -121,8 +121,10 @@ def show_setup_2(my_wifi_router_coordinates, my_phone_coordinates, neighboring_w
 def dist(x, y):
     return np.sqrt((x[0] - y[0])**2 + (x[1] - y[1])**2)
 
+
+received_signal = np.array([]).astype(np.float32)
 def plot_all_signals(message, my_wifi_router_coordinates, my_phone_coordinates, neighboring_wifi_routers):
-    global message_len, sampling_factor
+    global message_len, sampling_factor, received_signal
     message_signal = [int(message[i//sampling_factor]) for i in range(message_len * sampling_factor)]
     message_signal += [message_signal[-1]]
     received_signal = message_signal / (dist(my_wifi_router_coordinates, my_phone_coordinates)**2)
@@ -136,22 +138,12 @@ def plot_all_signals(message, my_wifi_router_coordinates, my_phone_coordinates, 
         int_signal = np.array(int_signal)
         int_signal = int_signal / (dist(my_phone_coordinates, r)**2)
         plot_step(int_signal, color=colors[i+1], label=f"Neighbour {i+1}'s signal")
-        show_legend()
-        # received_signal += int_signal
+        received_signal += int_signal
+    show_legend()
+    
 
 def get_received_signal(message, my_wifi_router_coordinates, my_phone_coordinates, neighboring_wifi_routers):
-    global message_len, sampling_factor
-    message_signal = [int(message[i//sampling_factor]) for i in range(message_len * sampling_factor)]
-    message_signal += [message_signal[-1]]
-    received_signal = message_signal / (dist(my_wifi_router_coordinates, my_phone_coordinates)**2)
-
-    for i, r in enumerate(neighboring_wifi_routers):
-        int_message = "".join((np.random.randint(2, size=message_len)).astype(str))
-        int_signal = [int(int_message[i//sampling_factor]) for i in range(message_len * sampling_factor)]
-        int_signal += [int_signal[-1]]
-        int_signal = np.array(int_signal)
-        int_signal = int_signal / (dist(my_phone_coordinates, r)**2)
-        received_signal += int_signal
+    global received_signal
     return received_signal
 
 def show_coverage(my_wifi_router_coordinates, my_phone_coordinates, neighboring_wifi_routers):
@@ -184,8 +176,8 @@ def show_coverage(my_wifi_router_coordinates, my_phone_coordinates, neighboring_
                 else:
                     n = 1 / den
                 na += n
-            r = np.random.normal(0, 0.02)
-            # r = 0.05
+            r = np.random.normal(0, 0.005)
+            # r = 0.01
             Z[-j, i] = s/(na + r)
     show_setup_2(my_wifi_router_coordinates, my_phone_coordinates, neighboring_wifi_routers)
     plt.imshow(Z > 0.7, extent=extent, cmap="gray", aspect='auto')
