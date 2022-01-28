@@ -146,7 +146,7 @@ def get_received_signal(message, my_wifi_router_coordinates, my_phone_coordinate
     global received_signal
     return received_signal
 
-def show_coverage(my_wifi_router_coordinates, my_phone_coordinates, neighboring_wifi_routers):
+def show_coverage(my_wifi_router_coordinates, my_phone_coordinates, neighboring_wifi_routers, noise_level):
     min_x = min(my_wifi_router_coordinates[0], my_phone_coordinates[0], *[x[0] for x in neighboring_wifi_routers])
     max_x = max(my_wifi_router_coordinates[0], my_phone_coordinates[0], *[x[0] for x in neighboring_wifi_routers])
     min_y = min(my_wifi_router_coordinates[1], my_phone_coordinates[1], *[x[1] for x in neighboring_wifi_routers])
@@ -176,7 +176,7 @@ def show_coverage(my_wifi_router_coordinates, my_phone_coordinates, neighboring_
                 else:
                     n = 1 / den
                 na += n
-            r = np.random.normal(0, 0.005)
+            r = np.random.normal(0, noise_level)
             # r = 0.01
             Z[-j, i] = s/(na + r)
     show_setup_2(my_wifi_router_coordinates, my_phone_coordinates, neighboring_wifi_routers)
