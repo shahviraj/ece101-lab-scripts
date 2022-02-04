@@ -71,16 +71,19 @@ class Graph():
         except nx.NetworkXNoPath:
             display(HTML('<h2 style="color:#B00020;">No path from S to D</h2>'))
     
-    def show_all_paths(self) -> None:
+    def show_all_paths(self, figsize=(10, 10)) -> None:
         paths = [path for path in nx.all_simple_paths(self.graph, source='S', target='D')]
         paths = sorted(paths, key=lambda x: len(x))
+        num_plots = len(paths)
+        print(f'Found {num_plots} paths')
+        plt.figure(figsize=figsize)
         for i, path in enumerate(paths):
-            plt.figure(figsize=(3, 2))
+            plt.subplot((num_plots // 4) + 1, 4, i + 1)
             path_edges = list(zip(path, path[1:]))
             nx.draw(self.graph, self.pos, node_color=[self.graph.nodes[node]['color'] for node in self.graph.nodes], with_labels=True, font_weight='bold', font_color='w')
             nx.draw_networkx_edges(
                 self.graph, self.pos, edgelist=path_edges, edge_color='purple', width=10, alpha=0.2)
-            plt.show()
+        plt.show()
     
     def remove_edge(self, u, v) -> None:
         if u is not str:
@@ -148,3 +151,5 @@ def get_hierarchial_graph():
     G.add_edge(42, 40)
 
     return G
+
+big_size = (10, 10)
