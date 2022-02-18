@@ -8,7 +8,7 @@ header_opts = {'ha': 'center', 'va': 'center', 'fontsize': 10}
 data_opts = {'ha': 'center', 'va': 'center',
              'fontsize': 20, 'fontweight': 'bold'}
 
-fig_opts = {'figsize': (10, 6), 'dpi': 100}
+fig_opts = {'figsize': (9, 5), 'dpi': 100}
 small_graph_opts = {'node_color': '#66023C',
                     'node_size': 50,
                     'edge_color': (0, 0, 0, 0.4),
@@ -69,19 +69,6 @@ class Graph:
         path_edges = list(zip(dia_path, dia_path[1:]))
         nx.draw_networkx_edges(
             self.G, self.pos, edgelist=path_edges, **dia_path_opts)
-
-    # function to draw histogram of path lengths
-    def draw_path_length_histogram(self):
-        if self.all_pairs_shortest_path_length is None:
-            self.all_pairs_shortest_path_length = dict(
-                nx.all_pairs_shortest_path_length(self.G))
-        plt.figure(figsize=(10, 6))
-        plt.hist(self.all_pairs_shortest_path_length.values(),
-                 bins=np.arange(0, self.dia+1, 1))
-        plt.xlabel('Path Length', **header_opts)
-        plt.ylabel('Frequency', **header_opts)
-        plt.title('Path Length Histogram', **header_opts)
-        plt.show()
 
     def show_path_length_distribution(self):
         if self.all_pairs_shortest_path_length is None:
