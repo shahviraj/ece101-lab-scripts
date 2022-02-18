@@ -83,6 +83,32 @@ class Graph:
         plt.title('Path Length Histogram', **header_opts)
         plt.show()
 
+    def show_path_length_distribution(self):
+        if self.all_pairs_shortest_path_length is None:
+            self.all_pairs_shortest_path_length = dict(
+                nx.all_pairs_shortest_path_length(self.G))
+        edge_lens = [list(d.values()) for d in self.all_pairs_shortest_path_length.values()]
+        # flatten list of lists
+        edge_lens = [item for sublist in edge_lens for item in sublist]
+        edge_lens = [x for x in edge_lens if x > 0]
+        plt.figure()
+        plt.hist(edge_lens, bins=np.arange(0, self.dia+1, 1)-0.5)
+        plt.xticks(np.arange(0, self.dia+1, 1))
+        plt.title('Path Length Distribution')
+        plt.xlabel('Path Length')
+        plt.ylabel('Frequency')
+        plt.show()
+    
+    def show_degree_distribution(self):
+        degrees = [self.G.degree(n) for n in self.G.nodes()]
+        plt.figure()
+        plt.title('Distribution of Number of Friends')
+        plt.hist(degrees, bins=np.arange(0, max(degrees)+1, 1)-0.5)
+        plt.xticks(np.arange(0, max(degrees)+1, 1))
+        plt.xlabel('Number of Friends')
+        plt.ylabel('Frequency')
+        plt.show()
+
 
 def small_world_graph(num_people, num_friends, chance):
     G = nx.connected_watts_strogatz_graph(num_people, num_friends, chance/100)
