@@ -3,7 +3,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import mediapipe as mp
 
-def get_head_pose(image):
+def get_head_pose(image_filename):
+    image = cv2.imread(image_filename)
     image = cv2.cvtColor(cv2.flip(image, 1), cv2.COLOR_BGR2RGB)
     mp_face_mesh = mp.solutions.face_mesh
     face_mesh = mp_face_mesh.FaceMesh(min_detection_confidence=0.5, min_tracking_confidence=0.5)
