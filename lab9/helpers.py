@@ -1,7 +1,7 @@
 import os
 from io import BytesIO
 import tarfile
-import tempfiles
+import tempfile
 from six.moves import urllib
 
 from matplotlib import gridspec
