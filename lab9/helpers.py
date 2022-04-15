@@ -9,6 +9,8 @@ from matplotlib import pyplot as plt
 import numpy as np
 from PIL import Image
 
+import tensorflow as tf
+
 class DeepLabModel(object):
   """Class to load deeplab model and run inference."""
 
