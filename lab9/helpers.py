@@ -9,7 +9,6 @@ from matplotlib import pyplot as plt
 import numpy as np
 from PIL import Image
 
-%tensorflow_version 1.x
 import tensorflow as tf
 
 class DeepLabModel(object):
