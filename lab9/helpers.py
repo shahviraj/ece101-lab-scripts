@@ -40,7 +40,7 @@ class DeepLabModel(object):
     with self.graph.as_default():
       tf.import_graph_def(graph_def, name='')
 
-    self.sess = tf.Session(graph=self.graph)
+    self.sess = tf.compat.v1.Session(graph=self.graph)
 
   def run(self, image):
     """Runs inference on a single image.
