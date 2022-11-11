@@ -29,7 +29,7 @@ class DeepLabModel(object):
     for tar_info in tar_file.getmembers():
       if self.FROZEN_GRAPH_NAME in os.path.basename(tar_info.name):
         file_handle = tar_file.extractfile(tar_info)
-        graph_def = tf.GraphDef.FromString(file_handle.read())
+        graph_def = tf.compat.v1.GraphDef.FromString(file_handle.read())
         break
 
     tar_file.close()
