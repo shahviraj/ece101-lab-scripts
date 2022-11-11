@@ -165,7 +165,7 @@ _MODEL_URLS = {
 }
 
 model_dir = tempfile.mkdtemp()
-tf.gfile.MakeDirs(model_dir)
+tf.io.gfile.MakeDirs(model_dir)
 
 download_path_small = os.path.join(model_dir, 'deeplab_model_small.tar.gz')
 download_path_big = os.path.join(model_dir, 'deeplab_model_big.tar.gz')
